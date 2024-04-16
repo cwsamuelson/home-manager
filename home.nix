@@ -33,6 +33,7 @@
     firefox
 
     curl
+    fd
  
     # development
     gitkraken
@@ -77,6 +78,7 @@
   home.shellAliases = {
     switch = "home-manager switch";
     ls = "ls -lha --color=auto";
+    find = "fd";
   };
 
   # Let Home Manager install and manage itself.
@@ -170,6 +172,8 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+
+    defaultCommand = "fd --type f";
   };
  
   programs.git = {
@@ -197,7 +201,7 @@
   };
  
   programs.vim = {
-    enable = true;###
+    enable = false;
     defaultEditor = true;
  
     settings = {
@@ -207,17 +211,36 @@
       tabstop = 2;
       shiftwidth = 2;
       mouse = "a";
+      ignorecase = true;
+      smartcase = true;
     };
  
     extraConfig = ''
+      set nocompatible
       set scrolloff=8
     '';
   };
  
   programs.neovim = {
-    enable = false;###
+    enable = true;
     defaultEditor = true;
     vimAlias = true;
+    viAlias = true;
+
+    extraConfig = ''
+      set nocompatible
+      set mouse=a
+      set expandtab
+      set tabstop=2
+
+      set number
+      set relativenumber
+
+      set scrolloff=8
+
+      set ignorecase
+      set smartcase
+    '';
   };
  
   # might be interested in using chezmoi and age?
