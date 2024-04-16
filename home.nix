@@ -30,6 +30,8 @@
     direnv
  
     firefox
+
+    curl
  
     # development
     gitkraken
@@ -145,6 +147,10 @@
       }
  
       PROMPT_COMMAND='update_prompt'
+
+      cheatsh() {
+        curl cheat.sh/$1
+      }
  
       # setup direnv
       eval "$(direnv hook bash)"
