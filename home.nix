@@ -9,7 +9,9 @@
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" ];
   };
- 
+
+  fonts.fontconfig.enable = true;
+
   home.username = "chris";
   home.homeDirectory = "/home/chris";
  
@@ -26,7 +28,6 @@
   # environment.
   home.packages = with pkgs; [
     # fundamental
-    devbox
     direnv
  
     firefox
@@ -36,6 +37,10 @@
     # development
     gitkraken
     jetbrains.clion
+
+    devbox
+
+    ccache
  
     # radiance projects
     awscli2
@@ -73,10 +78,14 @@
     switch = "home-manager switch";
     ls = "ls -lha --color=auto";
   };
- 
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
- 
+
+  programs.xplr = {
+    enable = true;
+  };
+
   # doesn't seem to work correctly on ubuntu
   #programs.kitty = {
   #  enable = true;
