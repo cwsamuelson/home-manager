@@ -222,5 +222,32 @@
  
   # might be interested in using chezmoi and age?
   # doesn't look like they're directly supported by home manager, may require additional channels or finagling
+
+  # ccache
+  # cachix
+  # clip
+  #   cliphist
+  #   clipman
+  #   clipmenu
+  # fonts
+  #   powerline/nerdfont
+  #   https://github.com/belluzj/fantasque-sans
+  # tldr help reader
+  #   https://github.com/dbrgn/tealdeer
+  #   https://github.com/tldr-pages/tldr
+  #   https://github.com/cheat/cheat
+  #   https://github.com/denisidoro/navi
+  #   https://github.com/gnebbia/kb
+  #   https://github.com/srsudar/eg
+  # tmux
+  #   sessionizer? https://github.com/jrmoulton/tmux-sessionizer?tab=readme-ov-file
+  # gdb dashboard
+  #   https://github.com/cyrus-and/gdb-dashboard
+
+  # tools:
+  # https://devhints.io/bash
+  # https://bash-prompt-generator.org/
+  # https://nix-community.github.io/home-manager/options.xhtml
+  # https://devhints.io/
 }
  
