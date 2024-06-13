@@ -64,21 +64,108 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".inputrc".text = ''
+      set editing-mode vi
+      set show-mode-in-prompt on
+      set vi-cmd-mode-string [c]
+      set vi-ins-mode-string [i]
+      set emacs-mode-string [e]
+
+      #vi mode
+      $if mode=vi
+      set keymap vi-command
+      Control-l: clear-screen
+      "#": insert-comment
+      ".": "i !*\r"
+      "|": "A | "
+      "D":kill-line
+      "C": "Da"
+      "dw": kill-word
+      "dd": kill-whole-line
+      "db": backward-kill-word
+      "cc": "ddi"
+      "cw": "dwi"
+      "cb": "dbi"
+      "daw": "lbdW"
+      "yaw": "lbyW"
+      "caw": "lbcW"
+      "diw": "lbdw"
+      "yiw": "lbyw"
+      "ciw": "lbcw"
+      "da\"": "lF\"df\""
+      "di\"": "lF\"lmtf\"d`t"
+      "ci\"": "di\"i"
+      "ca\"": "da\"i"
+      "da'": "lF'df'"
+      "di'": "lF'lmtf'd`t"
+      "ci'": "di'i"
+      "ca'": "da'i"
+      "da`": "lF\`df\`"
+      "di`": "lF\`lmtf\`d`t"
+      "ci`": "di`i"
+      "ca`": "da`i"
+      "da(": "lF(df)"
+      "di(": "lF(lmtf)d`t"
+      "ci(": "di(i"
+      "ca(": "da(i"
+      "da)": "lF(df)"
+      "di)": "lF(lmtf)d`t"
+      "ci)": "di(i"
+      "ca)": "da(i"
+      "da{": "lF{df}"
+      "di{": "lF{lmtf}d`t"
+      "ci{": "di{i"
+      "ca{": "da{i"
+      "da}": "lF{df}"
+      "di}": "lF{lmtf}d`t"
+      "ci}": "di}i"
+      "ca}": "da}i"
+      "da[": "lF[df]"
+      "di[": "lF[lmtf]d`t"
+      "ci[": "di[i"
+      "ca[": "da[i"
+      "da]": "lF[df]"
+      "di]": "lF[lmtf]d`t"
+      "ci]": "di]i"
+      "ca]": "da]i"
+      "da<": "lF<df>"
+      "di<": "lF<lmtf>d`t"
+      "ci<": "di<i"
+      "ca<": "da<i"
+      "da>": "lF<df>"
+      "di>": "lF<lmtf>d`t"
+      "ci>": "di>i"
+      "ca>": "da>i"
+      "da/": "lF/df/"
+      "di/": "lF/lmtf/d`t"
+      "ci/": "di/i"
+      "ca/": "da/i"
+      "da:": "lF:df:"
+      "di:": "lF:lmtf:d`t"
+      "ci:": "di:i"
+      "ca:": "da:i"
+      "gg": beginning-of-history
+      "G": end-of-history
+      ?: reverse-search-history
+      /: forward-search-history
+      
+      set keymap vi-insert
+      Control-l: clear-screen
+      $endif
+    '';
   };
  
   # environment variables
   # will only apply to enabled shells
   # programs.bash.enable = true;
   home.sessionVariables = {
-    CONAN_TOKEN="";
-    CONAN_USER="csamuelson.external";
     CONAN_REVISIONS_ENABLED=1;
   };
  
   home.shellAliases = {
     switch = "home-manager switch";
     ls = "ls -lha --color=auto";
-    find = "fd";
   };
 
   # Let Home Manager install and manage itself.
@@ -123,6 +210,17 @@
     historyControl = [
       "ignorespace"
       "ignoredups"
+      "erasedups"
+    ];
+
+    shellOptions = [
+        "-histappend"
+        "histverify"
+        "autocd"
+        "checkjobs"
+        "checkwinsize"
+        "extglob"
+        "globstar"
     ];
  
     # manual additions to bashrc
@@ -157,7 +255,13 @@
         fi
       }
  
-      PROMPT_COMMAND='update_prompt'
+      # manage history
+      function merge_history() {
+        history -n; history -w; history -c; history -r;
+      }
+      PROMPT_COMMAND='history -a;update_prompt'
+
+      set -o vi +o emacs
 
       cheatsh() {
         curl cheat.sh/$1
@@ -241,8 +345,9 @@
       set ignorecase
       set smartcase
     '';
+
   };
- 
+
   # might be interested in using chezmoi and age?
   # doesn't look like they're directly supported by home manager, may require additional channels or finagling
 
