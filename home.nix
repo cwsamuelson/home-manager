@@ -46,9 +46,6 @@
     # radiance projects
     awscli2
     ssm-session-manager-plugin
-
-    #open-vm-tools# this doesn't seem to work...
-    #open-vm-tools-desktop# this doesn't seem to work...
   ];
  
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -283,7 +280,7 @@
   programs.git = {
     enable = true;
     userName = "Chris Samuelson";
-    userEmail = "christopher.samuelson@radiancetech.com";
+    userEmail = "chris.sam55@gmail.com";
  
     aliases = {
       co = "checkout";
