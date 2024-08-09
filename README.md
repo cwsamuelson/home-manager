@@ -38,3 +38,8 @@ eval "$(direnv hook bash)"
 - sudo apt install curl -y && sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 - mv ~/.bashrc ~/.bashrc.backup && mv ~/.profile ~/.profile.backup && nix --extra-experimental-features 'nix-command flakes' run github:cwsamuelson/home-manager/main#homeConfigurations."chris".activationPackage
 
+Note: the above command will likely not work for this repo, because it is private.  To circumvent this, try this alternative command, after logging in or setting up ssh keys
+
+nix --extra-experimental-features 'nix-command flakes' run github:cwsamuelson/home-manager/main#homeConfigurations."$USER".activationPackage
+
+
