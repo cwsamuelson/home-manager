@@ -42,121 +42,23 @@
     devbox
 
     ccache
- 
-    # radiance projects
-    awscli2
-    ssm-session-manager-plugin
   ];
  
   home.file = {
     # ".screenrc".source = dotfiles/screenrc;
- 
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-
-    ".inputrc".text = ''
-      set editing-mode vi
-      set show-mode-in-prompt on
-      set vi-cmd-mode-string [c]
-      set vi-ins-mode-string [i]
-      set emacs-mode-string [e]
-
-      #vi mode
-      $if mode=vi
-      set keymap vi-command
-      Control-l: clear-screen
-      "#": insert-comment
-      ".": "i !*\r"
-      "|": "A | "
-      "D":kill-line
-      "C": "Da"
-      "dw": kill-word
-      "dd": kill-whole-line
-      "db": backward-kill-word
-      "cc": "ddi"
-      "cw": "dwi"
-      "cb": "dbi"
-      "daw": "lbdW"
-      "yaw": "lbyW"
-      "caw": "lbcW"
-      "diw": "lbdw"
-      "yiw": "lbyw"
-      "ciw": "lbcw"
-      "da\"": "lF\"df\""
-      "di\"": "lF\"lmtf\"d`t"
-      "ci\"": "di\"i"
-      "ca\"": "da\"i"
-      "da'": "lF'df'"
-      "di'": "lF'lmtf'd`t"
-      "ci'": "di'i"
-      "ca'": "da'i"
-      "da`": "lF\`df\`"
-      "di`": "lF\`lmtf\`d`t"
-      "ci`": "di`i"
-      "ca`": "da`i"
-      "da(": "lF(df)"
-      "di(": "lF(lmtf)d`t"
-      "ci(": "di(i"
-      "ca(": "da(i"
-      "da)": "lF(df)"
-      "di)": "lF(lmtf)d`t"
-      "ci)": "di(i"
-      "ca)": "da(i"
-      "da{": "lF{df}"
-      "di{": "lF{lmtf}d`t"
-      "ci{": "di{i"
-      "ca{": "da{i"
-      "da}": "lF{df}"
-      "di}": "lF{lmtf}d`t"
-      "ci}": "di}i"
-      "ca}": "da}i"
-      "da[": "lF[df]"
-      "di[": "lF[lmtf]d`t"
-      "ci[": "di[i"
-      "ca[": "da[i"
-      "da]": "lF[df]"
-      "di]": "lF[lmtf]d`t"
-      "ci]": "di]i"
-      "ca]": "da]i"
-      "da<": "lF<df>"
-      "di<": "lF<lmtf>d`t"
-      "ci<": "di<i"
-      "ca<": "da<i"
-      "da>": "lF<df>"
-      "di>": "lF<lmtf>d`t"
-      "ci>": "di>i"
-      "ca>": "da>i"
-      "da/": "lF/df/"
-      "di/": "lF/lmtf/d`t"
-      "ci/": "di/i"
-      "ca/": "da/i"
-      "da:": "lF:df:"
-      "di:": "lF:lmtf:d`t"
-      "ci:": "di:i"
-      "ca:": "da:i"
-      "gg": beginning-of-history
-      "G": end-of-history
-      ?: reverse-search-history
-      /: forward-search-history
-      
-      set keymap vi-insert
-      Control-l: clear-screen
-      $endif
-    '';
+    ".inputrc".source = dotfiles/inputrc;
   };
  
-  # environment variables
-  # will only apply to enabled shells
-  # programs.bash.enable = true;
   home.sessionVariables = {
     CONAN_REVISIONS_ENABLED=1;
   };
  
   home.shellAliases = {
     switch = "home-manager switch";
-    ls = "ls -lha --color=auto";
+    # -l list vertically, with add metadata
+    # -h human readable file sizes
+    # -A 'all', but excluding '.' and '..'
+    ls = "ls -lhA --color=auto";
   };
 
   # Let Home Manager install and manage itself.
@@ -277,7 +179,17 @@
     userEmail = "chris.sam55@gmail.com";
  
     aliases = {
-      co = "checkout";
+      uncommit = "reset --soft HEAD^";
+      discard = "reset HEAD --hard";
+
+      # this diff-intent style makes commands discoverable by autocomplete, and more organized
+      # <command>-<intent>
+      diff-all = "!\"for name in $(git diff --name-only $1); do git difftool -y $1 $name & done\"";
+      diff-changed = "diff --name-status -r";
+      diff-stat = "diff --stat --ignore-space-change -r";
+      diff-staged = "diff --cached";
+      diff-upstream = "!git fetch origin && git diff main origin/main";
+      diff-words = "diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'";
     };
  
     difftastic = {
@@ -321,12 +233,14 @@
     defaultEditor = true;
     vimAlias = true;
     viAlias = true;
+    vimdiffAlias = true;
 
     extraConfig = ''
       set nocompatible
       set mouse=a
       set expandtab
       set tabstop=2
+      set shiftwidth=2
 
       set number
       set relativenumber
@@ -335,6 +249,8 @@
 
       set ignorecase
       set smartcase
+
+      colorscheme torte
     '';
 
   };
