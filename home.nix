@@ -27,21 +27,15 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # fundamental
-    direnv
- 
     firefox
-
     curl
     fd
+    bat
  
-    # development
-    gitkraken
-    jetbrains.clion
-
+    direnv
     devbox
-
-    ccache
+    gitkraken
+    jetbrains-toolbox
   ];
  
   home.file = {
