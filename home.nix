@@ -28,14 +28,22 @@
   # environment.
   home.packages = with pkgs; [
     firefox
+    gitkraken
+    jetbrains-toolbox
+
     curl
     fd
     bat
+    most
+    # I think ov might be too much of a pain in the ass...but it works for now
+    ov
+    # markdown
+    # ov --section-delimiter "^#" --section-header README.md
+    # top
+    # top -b -c -w512|ov --column-delimiter "/\s+/" --section-delimiter "^top" --column-mode --column-rainbow --follow-section -w=false
  
     direnv
     devbox
-    gitkraken
-    jetbrains-toolbox
   ];
  
   home.file = {
@@ -45,14 +53,26 @@
  
   home.sessionVariables = {
     CONAN_REVISIONS_ENABLED=1;
+    BAT_PAGER="ov -F H3";
+    MANPAGER="ov --section-delimiter '^[^\s]' --section-header";
   };
  
+  # color=always can cause problems sometimes :(
+  # piping to commands and files will include the command characters
+  # my usage of these commands doesn't typically run into that problem
   home.shellAliases = {
     switch = "home-manager switch";
     # -l list vertically, with add metadata
     # -h human readable file sizes
     # -A 'all', but excluding '.' and '..'
-    ls = "ls -lhA --color=auto";
+    ls = "ls -lhA --color=always";
+    # -I skip binary files
+    # -n include line numbers
+    # -r recursive
+    # -i case insensitive
+    grep = "grep -Ini --color=always";
+    oops = "sudo $(history -p !!)";
+    cat = "bat --wrap=never";
   };
 
   # Let Home Manager install and manage itself.
@@ -198,6 +218,14 @@
  
     extraConfig = {
       init.defaultBranch = "main";
+
+      core.pager = "ov -F";
+      pager.diff = "ov --config $XDG_CONFIG_HOME/ov/config.yaml -F --section-delimiter '^diff' --section-header";
+      pager.log = "ov --config $XDG_CONFIG_HOME/ov/config.yaml -F --section-delimiter '^commit' --section-header-num 3";
+      pager.show = "ov --config $XDG_CONFIG_HOME/ov/config.yaml -F --header 3";
+
+      grep.lineNumber = "true";
+      grep.fullName = "true";
     };
   };
  
