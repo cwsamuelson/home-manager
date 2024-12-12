@@ -35,12 +35,6 @@
     fd
     bat
     most
-    # I think ov might be too much of a pain in the ass...but it works for now
-    ov
-    # markdown
-    # ov --section-delimiter "^#" --section-header README.md
-    # top
-    # top -b -c -w512|ov --column-delimiter "/\s+/" --section-delimiter "^top" --column-mode --column-rainbow --follow-section -w=false
  
     direnv
     devbox
@@ -53,8 +47,6 @@
  
   home.sessionVariables = {
     CONAN_REVISIONS_ENABLED=1;
-    BAT_PAGER="ov -F H3";
-    MANPAGER="ov --section-delimiter '^[^\s]' --section-header";
   };
  
   # color=always can cause problems sometimes :(
@@ -218,11 +210,6 @@
  
     extraConfig = {
       init.defaultBranch = "main";
-
-      core.pager = "ov -F";
-      pager.diff = "ov --config $XDG_CONFIG_HOME/ov/config.yaml -F --section-delimiter '^diff' --section-header";
-      pager.log = "ov --config $XDG_CONFIG_HOME/ov/config.yaml -F --section-delimiter '^commit' --section-header-num 3";
-      pager.show = "ov --config $XDG_CONFIG_HOME/ov/config.yaml -F --header 3";
 
       grep.lineNumber = "true";
       grep.fullName = "true";
