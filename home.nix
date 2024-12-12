@@ -185,6 +185,7 @@
     userEmail = "chris.sam55@gmail.com";
  
     aliases = {
+      co = "checkout";
       uncommit = "reset --soft HEAD^";
       discard = "reset HEAD --hard";
 
