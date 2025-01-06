@@ -30,6 +30,7 @@
     firefox
     gitkraken
     jetbrains-toolbox
+    stdman
 
     curl
     fd
@@ -67,24 +68,23 @@
     cat = "bat --wrap=never";
   };
 
+  programs = {
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+    home-manager.enable = true;
 
-  programs.xplr = {
-    enable = true;
-  };
+    xplr.enable = true;
 
-  # doesn't seem to work correctly on ubuntu
-  #programs.kitty = {
-  #  enable = true;
-  #  shellIntegration.enableZshIntegration = true;#programs.zsh.enable;
-  #  shellIntegration.enableBashIntegration = false;#programs.bash.enable;
-  #};
- 
-  programs.zsh = {
-    enable = true;
-    #enableAutosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
+    # doesn't seem to work correctly on ubuntu
+    #kitty = {
+    #  enable = true;
+    #  shellIntegration.enableZshIntegration = true;#programs.zsh.enable;
+    #  shellIntegration.enableBashIntegration = false;#programs.bash.enable;
+    #};
+
+     zsh = {
+      enable = true;
+      #enableAutosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
  
     history = {
       ignoreAllDups = true;
@@ -98,13 +98,13 @@
         "git"
         "history"
       ];
+      };
     };
-  };
  
-  programs.bash = {
-    enable = true;
- 
-    # ignoreboth = ignorespace and ignoredups
+    bash = {
+      enable = true;
+   
+      # ignoreboth = ignorespace and ignoredups
     # ignorespace will not log to history any command with a leading space
     historyControl = [
       "ignorespace"
@@ -168,18 +168,18 @@
  
       # setup direnv
       eval "$(direnv hook bash)"
-    '';
-  };
- 
-  programs.fzf = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
+      '';
+    };
+
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
 
     defaultCommand = "fd --type f";
   };
  
-  programs.git = {
+    git = {
     enable = true;
     userName = "Chris Samuelson";
     userEmail = "chris.sam55@gmail.com";
@@ -214,13 +214,13 @@
 
       grep.lineNumber = "true";
       grep.fullName = "true";
+      };
     };
-  };
  
-  programs.vim = {
-    enable = false;
-    defaultEditor = true;
- 
+    vim = {
+      enable = false;
+      defaultEditor = true;
+   
     settings = {
       expandtab = true;
       number = true;
@@ -235,13 +235,13 @@
     extraConfig = ''
       set nocompatible
       set scrolloff=8
-    '';
-  };
- 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
+      '';
+    };
+
+    neovim = {
+     enable = true;
+     defaultEditor = true;
+     vimAlias = true;
     viAlias = true;
     vimdiffAlias = true;
 
@@ -260,9 +260,9 @@
       set ignorecase
       set smartcase
 
-      colorscheme torte
-    '';
-
+       colorscheme torte
+     '';
+    };
   };
 
   # might be interested in using chezmoi and age?
