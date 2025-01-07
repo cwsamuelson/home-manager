@@ -12,24 +12,25 @@
 
   fonts.fontconfig.enable = true;
 
-  home.username = "chris";
-  home.homeDirectory = "/home/chris";
- 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
+  home = {
+    username = "chris";
+    homeDirectory = "/home/chris";
+
+    # This value determines the Home Manager release that your configuration is
+    # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
   #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
- 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = with pkgs; [
-    firefox
-    gitkraken
-    jetbrains-toolbox
+    # You should not change this value, even if you update Home Manager. If you do
+    # want to update the value, then make sure to first check the Home Manager
+    # release notes.
+    stateVersion = "23.11"; # Please read the comment before changing.
+   
+    # The packages option allows you to install Nix packages into your
+    # environment.
+    packages = with pkgs; [
+      firefox
+      gitkraken
+      jetbrains-toolbox
     stdman
 
     curl
@@ -41,22 +42,26 @@
     devbox
   ];
  
-  home.file = {
+    file = {
     # ".screenrc".source = dotfiles/screenrc;
-    ".inputrc".source = dotfiles/inputrc;
-  };
- 
-  home.sessionVariables = {
-    CONAN_REVISIONS_ENABLED=1;
-  };
- 
-  # color=always can cause problems sometimes :(
-  # piping to commands and files will include the command characters
-  # my usage of these commands doesn't typically run into that problem
-  home.shellAliases = {
-    switch = "home-manager switch";
-    # -l list vertically, with add metadata
-    # -h human readable file sizes
+      ".inputrc".source = dotfiles/inputrc;
+    };
+   
+    sessionVariables = {
+      CONAN_REVISIONS_ENABLED=1;
+      CONAN_TOKEN="cmVmdGtuOjAxOjE3NjMxNDY5OTg6UE05Z0s3OXN6NGVMa3pxMWF2Rm4xUkNrWmpx";
+      CONAN_USER="csamuelson.external";
+      CONAN_PASSWORD="cmVmdGtuOjAxOjE3NjMxNDY5OTg6UE05Z0s3OXN6NGVMa3pxMWF2Rm4xUkNrWmpx";
+      CONAN_LOGIN_USERNAME="csamuelson.external";
+    };
+   
+    # color=always can cause problems sometimes :(
+    # piping to commands and files will include the command characters
+    # my usage of these commands doesn't typically run into that problem
+    shellAliases = {
+      switch = "home-manager switch";
+      # -l list vertically, with add metadata
+      # -h human readable file sizes
     # -A 'all', but excluding '.' and '..'
     ls = "ls -lhA --color=always";
     # -I skip binary files
@@ -64,12 +69,13 @@
     # -r recursive
     # -i case insensitive
     grep = "grep -Ini --color=always";
-    oops = "sudo $(history -p !!)";
-    cat = "bat --wrap=never";
+      oops = "sudo $(history -p !!)";
+      cat = "bat --wrap=never";
+    };
   };
-
+ 
   programs = {
-  # Let Home Manager install and manage itself.
+    # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
     xplr.enable = true;
@@ -203,14 +209,13 @@
       enable = true;
       background = "dark";
       color = "auto";
-      display = "side-by-side";
-    };
- 
-    ignores = [
-    ];
- 
-    extraConfig = {
-      init.defaultBranch = "main";
+        display = "side-by-side";
+      };
+   
+      ignores = [];
+   
+      extraConfig = {
+        init.defaultBranch = "main";
 
       grep.lineNumber = "true";
       grep.fullName = "true";
@@ -264,35 +269,5 @@
      '';
     };
   };
-
-  # might be interested in using chezmoi and age?
-  # doesn't look like they're directly supported by home manager, may require additional channels or finagling
-
-  # ccache
-  # cachix
-  # clip
-  #   cliphist
-  #   clipman
-  #   clipmenu
-  # fonts
-  #   powerline/nerdfont
-  #   https://github.com/belluzj/fantasque-sans
-  # tldr help reader
-  #   https://github.com/dbrgn/tealdeer
-  #   https://github.com/tldr-pages/tldr
-  #   https://github.com/cheat/cheat
-  #   https://github.com/denisidoro/navi
-  #   https://github.com/gnebbia/kb
-  #   https://github.com/srsudar/eg
-  # tmux
-  #   sessionizer? https://github.com/jrmoulton/tmux-sessionizer?tab=readme-ov-file
-  # gdb dashboard
-  #   https://github.com/cyrus-and/gdb-dashboard
-
-  # tools:
-  # https://devhints.io/bash
-  # https://bash-prompt-generator.org/
-  # https://nix-community.github.io/home-manager/options.xhtml
-  # https://devhints.io/
 }
  
