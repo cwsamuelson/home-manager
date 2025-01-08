@@ -18,8 +18,8 @@
 
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
+    # introduces backwards incompatible changes.
+    #
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
@@ -31,16 +31,18 @@
       firefox
       gitkraken
       jetbrains-toolbox
-    stdman
+      stdman
 
-    curl
-    fd
-    bat
-    most
+      curl
+      fd
+      # delta?
+      # https://github.com/dandavison/delta
+      bat
+      most
  
-    direnv
-    devbox
-  ];
+      direnv
+      devbox
+    ];
  
     file = {
     # ".screenrc".source = dotfiles/screenrc;
@@ -62,13 +64,13 @@
       switch = "home-manager switch";
       # -l list vertically, with add metadata
       # -h human readable file sizes
-    # -A 'all', but excluding '.' and '..'
-    ls = "ls -lhA --color=always";
-    # -I skip binary files
-    # -n include line numbers
-    # -r recursive
-    # -i case insensitive
-    grep = "grep -Ini --color=always";
+      # -A 'all', but excluding '.' and '..'
+      ls = "ls -lhA --color=always";
+      # -I skip binary files
+      # -n include line numbers
+      # -r recursive
+      # -i case insensitive
+      grep = "grep -Ini --color=always";
       oops = "sudo $(history -p !!)";
       cat = "bat --wrap=never";
     };
@@ -87,23 +89,23 @@
     #  shellIntegration.enableBashIntegration = false;#programs.bash.enable;
     #};
 
-     zsh = {
+    zsh = {
       enable = true;
       #enableAutosuggestions.enable = true;
       syntaxHighlighting.enable = true;
  
-    history = {
-      ignoreAllDups = true;
-      ignoreSpace = true;
-    };
+      history = {
+        ignoreAllDups = true;
+        ignoreSpace = true;
+      };
  
-    oh-my-zsh = {
-      enable = true;
+      oh-my-zsh = {
+        enable = true;
  
-      plugins = [
-        "git"
-        "history"
-      ];
+        plugins = [
+          "git"
+          "history"
+        ];
       };
     };
  
@@ -111,14 +113,14 @@
       enable = true;
    
       # ignoreboth = ignorespace and ignoredups
-    # ignorespace will not log to history any command with a leading space
-    historyControl = [
-      "ignorespace"
-      "ignoredups"
-      "erasedups"
-    ];
+      # ignorespace will not log to history any command with a leading space
+      historyControl = [
+        "ignorespace"
+        "ignoredups"
+        "erasedups"
+      ];
 
-    shellOptions = [
+      shellOptions = [
         "-histappend"
         "histverify"
         "autocd"
@@ -126,54 +128,58 @@
         "checkwinsize"
         "extglob"
         "globstar"
-    ];
+      ];
  
-    # manual additions to bashrc
-    initExtra = ''
-      # setup prompt
+      # manual additions to bashrc
+      initExtra = ''
+        function highlight() {
+          egrep --color=always "$\{1\}|$" $2
+        }
+
+        # setup prompt
  
-      # https://bash-prompt-generator.org/
-      # basic prompt
-      #PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        # https://bash-prompt-generator.org/
+        # basic prompt
+        #PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
  
-      GIT_PROMPT_FILE_NIXOS="/run/current-system/sw/share/bash-completion/completions/git-prompt.sh"
-      GIT_PROMPT_FILE_NIX="$HOME/.nix-profile/share/git/contrib/completion/git-prompt.sh"
+        GIT_PROMPT_FILE_NIXOS="/run/current-system/sw/share/bash-completion/completions/git-prompt.sh"
+        GIT_PROMPT_FILE_NIX="$HOME/.nix-profile/share/git/contrib/completion/git-prompt.sh"
  
-      if [[ -f "$GIT_PROMPT_FILE_NIXOS" ]]; then
-        source "$GIT_PROMPT_FILE_NIXOS"
-      elif [[ -f "$GIT_PROMPT_FILE_NIX" ]]; then
-        source "$GIT_PROMPT_FILE_NIX"
-      fi
- 
-      update_prompt() {
-        PS1='\[\e[92m\]\u\[\e[0m\]@\[\e[92m\]\H\[\e[0m\]:\[\e[38;5;37m\]\w\[\e[0m\]'
- 
-        if [[ $(command -v __git_ps1) ]]; then
-          PS1_CMD1=$(__git_ps1 " (%s)")
-          PS1+="\[\e[38;5;247m\]''${PS1_CMD1}\[\e[0m\]"
- 
-          if [ -n "$DIRENV_DIR" ]; then
-            PS1+="% " # % for direnv directories
-          else
-            PS1+="\\$ " # $ for non-direnv directories
-          fi
+        if [[ -f "$GIT_PROMPT_FILE_NIXOS" ]]; then
+          source "$GIT_PROMPT_FILE_NIXOS"
+        elif [[ -f "$GIT_PROMPT_FILE_NIX" ]]; then
+          source "$GIT_PROMPT_FILE_NIX"
         fi
-      }
  
-      # manage history
-      function merge_history() {
-        history -n; history -w; history -c; history -r;
-      }
-      PROMPT_COMMAND='history -a;update_prompt'
-
-      set -o vi +o emacs
-
-      cheatsh() {
-        curl cheat.sh/$1
-      }
+        update_prompt() {
+          PS1='\[\e[92m\]\u\[\e[0m\]@\[\e[92m\]\H\[\e[0m\]:\[\e[38;5;37m\]\w\[\e[0m\]'
  
-      # setup direnv
-      eval "$(direnv hook bash)"
+          if [[ $(command -v __git_ps1) ]]; then
+            PS1_CMD1=$(__git_ps1 " (%s)")
+            PS1+="\[\e[38;5;247m\]''${PS1_CMD1}\[\e[0m\]"
+ 
+            if [ -n "$DIRENV_DIR" ]; then
+              PS1+="% " # % for direnv directories
+            else
+              PS1+="\\$ " # $ for non-direnv directories
+            fi
+          fi
+        }
+ 
+        # manage history
+        function merge_history() {
+          history -n; history -w; history -c; history -r;
+        }
+        PROMPT_COMMAND='history -a;update_prompt'
+
+        set -o vi +o emacs
+
+        cheatsh() {
+          curl cheat.sh/$1
+        }
+ 
+        # setup direnv
+        eval "$(direnv hook bash)"
       '';
     };
 
@@ -182,33 +188,33 @@
       enableBashIntegration = true;
       enableZshIntegration = true;
 
-    defaultCommand = "fd --type f";
-  };
- 
-    git = {
-    enable = true;
-    userName = "Chris Samuelson";
-    userEmail = "chris.sam55@gmail.com";
- 
-    aliases = {
-      co = "checkout";
-      uncommit = "reset --soft HEAD^";
-      discard = "reset HEAD --hard";
-
-      # this diff-intent style makes commands discoverable by autocomplete, and more organized
-      # <command>-<intent>
-      diff-all = "!\"for name in $(git diff --name-only $1); do git difftool -y $1 $name & done\"";
-      diff-changed = "diff --name-status -r";
-      diff-stat = "diff --stat --ignore-space-change -r";
-      diff-staged = "diff --cached";
-      diff-upstream = "!git fetch origin && git diff main origin/main";
-      diff-words = "diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'";
+      defaultCommand = "fd --type f";
     };
  
-    difftastic = {
+    git = {
       enable = true;
-      background = "dark";
-      color = "auto";
+      userName = "Chris Samuelson";
+      userEmail = "chris.sam55@gmail.com";
+ 
+      aliases = {
+        co = "checkout";
+        uncommit = "reset --soft HEAD^";
+        discard = "reset HEAD --hard";
+
+        # this diff-intent style makes commands discoverable by autocomplete, and more organized
+        # <command>-<intent>
+        diff-all = "!\"for name in $(git diff --name-only $1); do git difftool -y $1 $name & done\"";
+        diff-changed = "diff --name-status -r";
+        diff-stat = "diff --stat --ignore-space-change -r";
+        diff-staged = "diff --cached";
+        diff-upstream = "!git fetch origin && git diff main origin/main";
+        diff-words = "diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'";
+      };
+ 
+      difftastic = {
+        enable = true;
+        background = "dark";
+        color = "auto";
         display = "side-by-side";
       };
    
@@ -217,8 +223,8 @@
       extraConfig = {
         init.defaultBranch = "main";
 
-      grep.lineNumber = "true";
-      grep.fullName = "true";
+        grep.lineNumber = "true";
+        grep.fullName = "true";
       };
     };
  
@@ -226,46 +232,46 @@
       enable = false;
       defaultEditor = true;
    
-    settings = {
-      expandtab = true;
-      number = true;
-      relativenumber = true;
-      tabstop = 2;
-      shiftwidth = 2;
-      mouse = "a";
-      ignorecase = true;
-      smartcase = true;
-    };
+      settings = {
+        expandtab = true;
+        number = true;
+        relativenumber = true;
+        tabstop = 2;
+        shiftwidth = 2;
+        mouse = "a";
+        ignorecase = true;
+        smartcase = true;
+      };
  
-    extraConfig = ''
-      set nocompatible
-      set scrolloff=8
+      extraConfig = ''
+        set nocompatible
+        set scrolloff=8
       '';
     };
 
     neovim = {
-     enable = true;
-     defaultEditor = true;
-     vimAlias = true;
-    viAlias = true;
-    vimdiffAlias = true;
+      enable = true;
+      defaultEditor = true;
+      vimAlias = true;
+      viAlias = true;
+      vimdiffAlias = true;
 
-    extraConfig = ''
-      set nocompatible
-      set mouse=a
-      set expandtab
-      set tabstop=2
-      set shiftwidth=2
+      extraConfig = ''
+        set nocompatible
+        set mouse=a
+        set expandtab
+        set tabstop=2
+        set shiftwidth=2
 
-      set number
-      set relativenumber
+        set number
+        set relativenumber
 
-      set scrolloff=8
+        set scrolloff=8
 
-      set ignorecase
-      set smartcase
+        set ignorecase
+        set smartcase
 
-       colorscheme torte
+        colorscheme torte
      '';
     };
   };
