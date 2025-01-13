@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixgl, ... }:
  
 # https://www.atlassian.com/git/tutorials/dotfiles
 # https://nix-community.github.io/home-manager/options.xhtml
@@ -77,6 +77,8 @@
       docker-clean = "docker system df && docker container prune -f && docker image prune -f && docker builder prune -f && docker volume prune -a -f && docker system df";
     };
   };
+
+  nixGL.packages = nixgl.packages;
  
   programs = {
     # Let Home Manager install and manage itself.
@@ -85,11 +87,12 @@
     xplr.enable = true;
 
     # doesn't seem to work correctly on ubuntu
-    #kitty = {
-    #  enable = true;
-    #  shellIntegration.enableZshIntegration = true;#programs.zsh.enable;
-    #  shellIntegration.enableBashIntegration = false;#programs.bash.enable;
-    #};
+    kitty = {
+      package = config.lib.nixGL.wrap pkgs.kitty;
+      enable = true;
+      shellIntegration.enableZshIntegration = true;#programs.zsh.enable;
+      shellIntegration.enableBashIntegration = false;#programs.bash.enable;
+    };
 
     zsh = {
       enable = true;
@@ -196,7 +199,7 @@
     git = {
       enable = true;
       userName = "Chris Samuelson";
-      userEmail = "chris.sam55@gmail.com";
+      userEmail = "christopher.samuelson@radiancetech.com";
  
       aliases = {
         co = "checkout";

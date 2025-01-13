@@ -11,17 +11,22 @@
       # url = "github:nix-community/home-manager"; # Unstable
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
+  outputs = { nixpkgs, home-manager, nixgl, ... }: {
     defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
 
     security.chromiumSuidSandbox.enable = true;
 
     homeConfigurations = {
       "chris" = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
-
+        extraSpecialArgs = { inherit nixgl; };
+        pkgs = import nixpkgs {
+          system =  "x86_64-linux";
+          overlays = [ nixgl.overlay ];
+        };
         modules = [ ./home.nix ];
       };
     };
