@@ -32,6 +32,7 @@
       gitkraken
       jetbrains-toolbox
       stdman
+      obsidian
 
       curl
       fd
@@ -62,6 +63,13 @@
     # piping to commands and files will include the command characters
     # my usage of these commands doesn't typically run into that problem
     shellAliases = {
+      # search on path
+      # how to accept arguments?
+      # name = "find ${PATH//:/\/ } -iname 'search term'
+      # create variation of search using arbitrary var?
+      # search as array:
+      # name = "find \"${array[@]}\" -iname "$file"
+
       switch = "home-manager switch";
       # -l list vertically, with add metadata
       # -h human readable file sizes
