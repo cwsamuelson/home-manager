@@ -39,7 +39,8 @@
       # https://github.com/dandavison/delta
       bat
       most
- 
+      tree
+   
       direnv
       devbox
     ];
@@ -73,6 +74,7 @@
       grep = "grep -Ini --color=always";
       oops = "sudo $(history -p !!)";
       cat = "bat --wrap=never";
+      docker-clean = "docker system df && docker container prune -f && docker image prune -f && docker builder prune -f && docker volume prune -a -f && docker system df";
     };
   };
  
