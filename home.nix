@@ -324,24 +324,26 @@
         }
 
         # this makes all the color functions and variables available to scripts
-        export -f colors
-        export -f colortest
-        export -f black
-        export -f blackb
-        export -f white
-        export -f whiteb
-        export -f red
-        export -f redb
-        export -f green
-        export -f greenb
-        export -f yellow
-        export -f yellowb
-        export -f blue
-        export -f blueb
-        export -f purple
-        export -f purpleb
-        export -f lightblue
-        export -f lightblueb
+        # the functions are commented out because of a bug in devbox that clobbers the names and causes errors
+        # https://github.com/jetify-com/devbox/issues/995
+        #export -f colors
+        #export -f colortest
+        #export -f black
+        #export -f blackb
+        #export -f white
+        #export -f whiteb
+        #export -f red
+        #export -f redb
+        #export -f green
+        #export -f greenb
+        #export -f yellow
+        #export -f yellowb
+        #export -f blue
+        #export -f blueb
+        #export -f purple
+        #export -f purpleb
+        #export -f lightblue
+        #export -f lightblueb
         export black
         export blackb
         export white
