@@ -2,6 +2,19 @@
  
 # https://www.atlassian.com/git/tutorials/dotfiles
 # https://nix-community.github.io/home-manager/options.xhtml
+
+# Use this to retrieve vim plugins from github that don't exist in nix repos
+#let
+#  fromGitHub = ref: repo: pkgs.vimUtils.buildVimPlugin {
+#    pname = "${lib.strings.sanitizeDerivationName repo}";
+#    version = ref;
+#    src = builtins.fetchGit {
+#      url = "https://github.com/${repo}.git";
+#      ref = ref;
+#    };
+#  };
+#in
+
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -93,9 +106,43 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
-    xplr.enable = true;
+    # starship? https://starship.rs/
 
-    # doesn't seem to work correctly on ubuntu
+    xplr = {
+      enable = true;
+      #plugins = {};
+    };
+
+    ranger.enable = true;
+
+    # integrate to neovim?
+    yazi = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+
+      #plugins = {};
+      #flavors = {};# preferred over themes
+      #theme = {};
+      #keymap = {};
+
+      settings = {
+        manager = {
+          sort_sensitive = false;
+          sort_dir_first = true;
+          show_hidden = true;
+          show_symlink = true;
+          scrolloff = 8;
+        };
+
+        preview = {
+          wrap = "no";
+          tab_size = 2;
+        };
+      };
+    };
+
+    # works on ubuntu when using nixgl
     kitty = {
       package = config.lib.nixGL.wrap pkgs.kitty;
       enable = true;
@@ -415,7 +462,7 @@
  
     vim = {
       enable = false;
-      defaultEditor = true;
+      defaultEditor = false;
    
       settings = {
         expandtab = true;
@@ -434,12 +481,39 @@
       '';
     };
 
+    # yazi integration?
     neovim = {
       enable = true;
       defaultEditor = true;
       vimAlias = true;
       viAlias = true;
       vimdiffAlias = true;
+
+      # Additional plugin engines available
+      #withNodeJs = true;
+      #withPython3 = true;
+      #withRuby = true;
+
+      plugins = 
+      #let
+      #  nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (treesitter-plugins:
+      #    with treesitter-plugins; [
+      #      bash
+      #      zsh
+      #      c
+      #      cpp
+      #      lua
+      #      nix
+      #      python
+      #    ]);
+      #in
+      with pkgs.vimPlugins; [
+        yazi-nvim
+        #nvim-treesitter-with-plugins
+
+        # fromGithub defined above; use to pull plugins from github
+        #(fromGithub "HEAD" "user/project.nvim")
+      ];
 
       extraConfig = ''
         set nocompatible
@@ -458,6 +532,9 @@
 
         colorscheme torte
      '';
+
+     #extraLuaConfig = ''
+     #'';
     };
   };
 }
