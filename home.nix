@@ -106,8 +106,6 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
-    # starship? https://starship.rs/
-
     xplr = {
       enable = true;
       #plugins = {};
@@ -146,8 +144,8 @@
     kitty = {
       package = config.lib.nixGL.wrap pkgs.kitty;
       enable = true;
-      shellIntegration.enableZshIntegration = true;#programs.zsh.enable;
-      shellIntegration.enableBashIntegration = false;#programs.bash.enable;
+      shellIntegration.enableZshIntegration = true;
+      shellIntegration.enableBashIntegration = true;
 
       font = {
         name = "DejaVuSansMono";
@@ -157,22 +155,54 @@
 
     zsh = {
       enable = true;
-      #enableAutosuggestions.enable = true;
+
+      autocd = true;
+
+      autosuggestion = {
+        enable = true;
+        strategy = [
+          # doesn't work well with history.ignoreAllDups
+          # I'm willing to try it with history.expireDuplicatesFirst
+          #"match_prev_cmd"
+          "history"
+        ];
+      };
+
       syntaxHighlighting.enable = true;
+
+      #cdpath = [];
  
       history = {
         ignoreAllDups = true;
         ignoreSpace = true;
+        share = true;
+        append = true;
+        # include timestamps in history
+        #extended = true;
+        # currently redundant with ignoreAllDups
+        # conflicts with "match_prev_cmd completion strategy
+        #expireDuplicatesFirst
       };
  
       oh-my-zsh = {
         enable = true;
+
+        # powerlevel10k?
+        # https://dev.to/abdfnx/oh-my-zsh-powerlevel10k-cool-terminal-1no0
  
         plugins = [
           "git"
           "history"
         ];
       };
+
+      initExtra = ''
+        function highlight() {
+          egrep --color=always "''${1}|$" $2
+        }
+
+        eval "$(direnv hook zsh)"
+      '';
     };
  
     bash = {
@@ -414,6 +444,20 @@
         eval "$(direnv hook bash)"
       '';
     };
+
+    starship = {
+      enable = false;
+
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+
+      #settings = {
+      #};
+    };
+
+    #oh-my-posh = {
+    #  enable = true;
+    #};
 
     fzf = {
       enable = true;
