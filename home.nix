@@ -54,6 +54,8 @@
       bat
       most
       tree
+      btop
+      jq
    
       direnv
       devbox
