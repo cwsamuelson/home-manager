@@ -41,23 +41,19 @@
     # The packages option allows you to install Nix packages into your
     # environment.
     packages = with pkgs; [
-      firefox
+      firefox#
       gitkraken
       jetbrains-toolbox
       stdman
       obsidian
 
       curl
-      fd
+      fd#
       # delta?
       # https://github.com/dandavison/delta
-      bat
       most
       tree
-      btop
-      jq
    
-      direnv
       devbox
     ];
  
@@ -108,6 +104,18 @@
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
 
+    bat.enable = true;
+    btop.enable = true;
+    jq.enable = true;
+
+    direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+
+      nix-direnv.enable = true;
+    };
+
     xplr = {
       enable = true;
       #plugins = {};
@@ -144,10 +152,12 @@
 
     # works on ubuntu when using nixgl
     kitty = {
-      package = config.lib.nixGL.wrap pkgs.kitty;
       enable = true;
-      shellIntegration.enableZshIntegration = true;
-      shellIntegration.enableBashIntegration = true;
+      package = config.lib.nixGL.wrap pkgs.kitty;
+      shellIntegration = {
+        enableZshIntegration = true;
+        enableBashIntegration = true;
+      };
 
       font = {
         name = "DejaVuSansMono";
