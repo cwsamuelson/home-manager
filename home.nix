@@ -123,7 +123,6 @@
 
     ranger.enable = true;
 
-    # integrate to neovim?
     yazi = {
       enable = true;
       enableBashIntegration = true;
@@ -147,6 +146,30 @@
           wrap = "no";
           tab_size = 2;
         };
+
+        opener = {
+          tab_test = [
+            {
+              run = "kitten @ launch --type=tab $EDITOR $@";
+              #run = ''
+              #  kitten @ launch --type=tab --tab-title $(basename $@) ''${EDITOR:-nvim} $@
+              #'';
+              #run = "kitten @ launch --type=tab --tab-title ''\"$@''\" echo $@";
+              #run = "firefox $@";
+              desc = "Open editor in new Kitty tab";
+              #orphan = true;
+            }
+          ];
+        };
+
+        open = {
+          prepend_rules = [
+            {
+              name = "*.cc";
+              use = "tab_test";
+            }
+          ];
+        };
       };
     };
 
@@ -162,6 +185,10 @@
       font = {
         name = "DejaVuSansMono";
         size = 18;
+      };
+
+      settings = {
+        allow_remote_control = true;
       };
     };
 
@@ -537,7 +564,6 @@
       '';
     };
 
-    # yazi integration?
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -589,8 +615,10 @@
         colorscheme torte
      '';
 
-     #extraLuaConfig = ''
-     #'';
+     extraLuaConfig = ''
+       -- hotkey for yazi overlay
+       vim.api.nvim_set_keymap('n', '<leader>y', ':Yazi<CR>', { noremap = true, silent = true })
+     '';
     };
   };
 }
