@@ -564,6 +564,9 @@
       '';
     };
 
+    # enabled in part for telescope
+    ripgrep.enable = true;
+
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -577,21 +580,24 @@
       #withRuby = true;
 
       plugins = 
-      #let
-      #  nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (treesitter-plugins:
-      #    with treesitter-plugins; [
-      #      bash
-      #      zsh
-      #      c
-      #      cpp
-      #      lua
-      #      nix
-      #      python
-      #    ]);
-      #in
+      let
+        nvim-treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (treesitter-plugins:
+          with treesitter-plugins; [
+            bash
+            c
+            cpp
+            lua
+            nix
+            python
+          ]);
+      in
       with pkgs.vimPlugins; [
-        yazi-nvim
-        #nvim-treesitter-with-plugins
+        # https://github.com/LukasPietzschmann/telescope-tabs
+        telescope-nvim
+        telescope-fzf-native-nvim
+        nvim-treesitter-with-plugins
+
+        #yazi-nvim
 
         # fromGithub defined above; use to pull plugins from github
         #(fromGithub "HEAD" "user/project.nvim")
