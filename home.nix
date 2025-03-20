@@ -53,6 +53,8 @@
       # https://github.com/dandavison/delta
       most
       tree
+      yq
+      hishtory
    
       devbox
     ];
@@ -509,7 +511,7 @@
     git = {
       enable = true;
       userName = "Chris Samuelson";
-      userEmail = "christopher.samuelson@radiancetech.com";
+      userEmail = "chris.sam55@gmail.com";
  
       aliases = {
         co = "checkout";
