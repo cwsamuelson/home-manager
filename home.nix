@@ -52,9 +52,10 @@
       # delta?
       # https://github.com/dandavison/delta
       most
-      tree
       yq
       hishtory
+      tre-command
+      copier
    
       devbox
     ];
@@ -65,11 +66,12 @@
     };
    
     sessionVariables = {
-      CONAN_REVISIONS_ENABLED=1;
-      CONAN_TOKEN="cmVmdGtuOjAxOjE3NjMxNDY5OTg6UE05Z0s3OXN6NGVMa3pxMWF2Rm4xUkNrWmpx";
-      CONAN_USER="csamuelson.external";
-      CONAN_PASSWORD="cmVmdGtuOjAxOjE3NjMxNDY5OTg6UE05Z0s3OXN6NGVMa3pxMWF2Rm4xUkNrWmpx";
-      CONAN_LOGIN_USERNAME="csamuelson.external";
+      # conan1
+      #CONAN_TOKEN="";
+      #CONAN_USER="";
+      # conan2
+      CONAN_PASSWORD="demo";
+      CONAN_LOGIN_USERNAME="demo";
     };
    
     # color=always can cause problems sometimes :(
