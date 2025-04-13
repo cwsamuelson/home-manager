@@ -56,6 +56,7 @@
       hishtory
       tre-command
       copier
+      binsider
    
       devbox
     ];
@@ -97,6 +98,7 @@
       grep = "grep -Ini --color=always";
       oops = "sudo $(history -p !!)";
       cat = "bat --wrap=never";
+      dbr = "devbox run";
       docker-clean = "docker system df && docker container prune -f && docker image prune -f && docker builder prune -f && docker volume prune -a -f && docker system df";
       podman-clean = "podman system df && podman container prune -f -a && podman image prune -f && podman builder prune -f && podman volume prune -f && podman system df";
     };
@@ -274,6 +276,8 @@
         function highlight() {
           egrep --color=always "''${1}|$" $2
         }
+
+        tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
 
         # setup prompt
  
@@ -519,6 +523,7 @@
         co = "checkout";
         uncommit = "reset --soft HEAD^";
         discard = "reset HEAD --hard";
+        graph = "git log --graph --oneline --all";
 
         # this diff-intent style makes commands discoverable by autocomplete, and more organized
         # <command>-<intent>
