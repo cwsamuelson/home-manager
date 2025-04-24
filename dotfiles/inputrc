@@ -1,10 +1,17 @@
+# completion
+set completion-ignore-case on
+set completion-map-case on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set skip-completed-text on
+
+#vi mode
 set editing-mode vi
 set show-mode-in-prompt on
 set vi-cmd-mode-string [c]
 set vi-ins-mode-string [i]
 set emacs-mode-string [e]
 
-#vi mode
 $if mode=vi
 set keymap vi-command
 Control-l: clear-screen
