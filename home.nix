@@ -54,9 +54,16 @@
       most
       yq
       hishtory
-      tre-command
       copier
       binsider
+      yq # jq for yaml
+      ## advanced watch
+      # viddy
+      ## tui baobab tools
+      # wiper
+      # dua
+      # diskonaut
+      tre-command
    
       devbox
     ];
@@ -73,6 +80,7 @@
       # conan2
       CONAN_PASSWORD="demo";
       CONAN_LOGIN_USERNAME="demo";
+      DIRENV_LOG_FORMAT="";
     };
    
     # color=always can cause problems sometimes :(
@@ -99,8 +107,8 @@
       oops = "sudo $(history -p !!)";
       cat = "bat --wrap=never";
       dbr = "devbox run";
-      docker-clean = "docker system df && docker container prune -f && docker image prune -f && docker builder prune -f && docker volume prune -a -f && docker system df";
-      podman-clean = "podman system df && podman container prune -f -a && podman image prune -f && podman builder prune -f && podman volume prune -f && podman system df";
+      docker-clean = "docker system df && docker container prune -f -a && docker image prune -f && docker builder prune -f && docker volume prune -a -f && docker system df";
+      podman-clean = "podman system df && podman container prune -f && podman image prune -f && podman builder prune -f && podman volume prune -f && podman system df";
     };
   };
 
@@ -113,6 +121,8 @@
     bat.enable = true;
     btop.enable = true;
     jq.enable = true;
+    # jaq?
+    # play
 
     direnv = {
       enable = true;
@@ -243,7 +253,7 @@
 
       initExtra = ''
         function highlight() {
-          egrep --color=always "''${1}|$" $2
+          egrep -i --color=always "''${1}|$" $2
         }
 
         eval "$(direnv hook zsh)"
@@ -486,6 +496,9 @@
         export lightblue
         export lightblueb
         export end
+
+        # tre helper to enable the eNNN aliases for editing files
+        tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
  
         # setup direnv
         eval "$(direnv hook bash)"
