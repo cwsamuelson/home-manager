@@ -262,13 +262,21 @@
  
     bash = {
       enable = true;
+
+      enableCompletion = true;
    
-      # ignoreboth = ignorespace and ignoredups
-      # ignorespace will not log to history any command with a leading space
       historyControl = [
         "ignorespace"
         "ignoredups"
         "erasedups"
+      ];
+
+      historyIgnore = [
+        "fg"
+        "fg *"
+        "* --help"
+        "incognito"
+        "echo *"
       ];
 
       shellOptions = [
@@ -500,6 +508,18 @@
         # tre helper to enable the eNNN aliases for editing files
         tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
  
+        function incognito {
+          if [[ -v oldhistfile ]] ; then
+            yellowb "Exiting incognito"
+            HISTFILE=$oldhistfile
+            unset oldhistfile
+          else
+            yellowb "Entering incognito"
+            oldhistfile=$HISTFILE
+            HISTFILE=/dev/null
+          fi
+        }
+
         # setup direnv
         eval "$(direnv hook bash)"
       '';
@@ -529,10 +549,12 @@
  
     git = {
       enable = true;
+
       userName = "Chris Samuelson";
       userEmail = "chris.sam55@gmail.com";
  
       aliases = {
+        st = "status";
         co = "checkout";
         uncommit = "reset --soft HEAD^";
         discard = "reset HEAD --hard";
